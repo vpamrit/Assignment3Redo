@@ -101,7 +101,6 @@ def train(epoch, counter):
         #add other masks
         for nclass in CLASSES:
             tmp_label = np.concatenate((tmp_label, (mask == nclass)[np.newaxis, :]), axis=0)
-            img_label = tmp_label
 
         mask = tmp_label.astype('float32')
 
