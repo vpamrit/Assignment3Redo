@@ -84,7 +84,7 @@ def train(epoch, counter):
     model.train()
     for batch_idx, subjects_batch in enumerate(train_loader):
 
-        image, mask = subjects_batch['t1'][torchio.DATA], subjects_batch['label'][torchio.DATA].cuda()
+        image, mask = subjects_batch['t1'][torchio.DATA].squeeze_(), subjects_batch['label'][torchio.DATA].squeeze_().cuda()
 
         print(image.shape)
         print(mask.shape)
