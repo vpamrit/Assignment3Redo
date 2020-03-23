@@ -1,0 +1,8 @@
+assignment3.zip
+data/
+gen/
+.ipynb_checkpoints/
+Testsite.ipynb
+__pycache__/
+data.py
+
