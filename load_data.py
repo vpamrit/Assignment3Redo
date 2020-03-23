@@ -55,7 +55,7 @@ class SpleenDatasetBuilder:
         # store all subjects in the list
         for img_num in range(img_range[0], img_range[1]+1):
             img_file = os.path.join(self.root_dir, TRAIN_DIR, IMG_PREFIX + self.files[img_num] + EXT)
-            label_file = os.path.join(self.root_dir, LABEL_DIR, LABEL_PREFIX + self.files[self.img_num] + EXT)
+            label_file = os.path.join(self.root_dir, LABEL_DIR, LABEL_PREFIX + self.files[img_num] + EXT)
 
             subjects.append(torchio.Subject([
                 torchio.Image('t1', img_file, torchio.INTENSITY),
