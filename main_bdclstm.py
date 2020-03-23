@@ -97,7 +97,7 @@ def train(epoch, counter):
         mask = mask[:, :, :, :, 1]
 
         #add background masks
-        mask = torch.nn.functional.one_hot(mask, 14)
+        mask = torch.nn.functional.one_hot(mask.to(torch.int64), 14)
         mask = mask[:, CLASSES, :, :].cuda()
 
 
