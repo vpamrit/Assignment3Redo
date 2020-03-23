@@ -86,9 +86,6 @@ def train(epoch, counter):
 
         image, mask = subjects_batch['t1'][torchio.DATA], subjects_batch['label'][torchio.DATA]
 
-        print(image.shape)
-        print(mask.shape)
-
         #split into three depth images
         image1 = image[:, :, :, :, 0].cuda()
         image2 = image[:, :, :, :, 1].cuda()
@@ -96,8 +93,16 @@ def train(epoch, counter):
 
         mask = mask[:, :, :, :, 1]
 
-        #add background masks
-        mask = torch.nn.functional.one_hot(mask.to(torch.int64), 14)
+        #add background masks (2, 1, 240, 240)
+        #need it to be (2, 14, 240, 240)
+        tmp_mask = torch.nn.functional.one_hot(mask.to(torch.int64), 14)
+
+        mask = torch.zeros((tmp_mask[0], tmp_mask[3], tmp_mask[1], tmp_mask[2]))
+
+        #correct the shape
+        for i in range(len(CLASSES)):
+            mask[:, i, :, :] = tmp_mask[:, :, :, i]
+
         print(mask.shape)
         mask = mask[:, CLASSES, :, :].cuda()
 
