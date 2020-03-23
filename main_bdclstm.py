@@ -61,7 +61,7 @@ CLASSES = [0,1,6,7,8,9,11]
 
 # %% Loading in the Dataset
 slice_size = 240
-dset_train = SpleenDatasetBuilder(DATA_FOLDER, (1, 1)).dataset
+dset_train = SpleenDatasetBuilder(DATA_FOLDER, (0, 4)).dataset
 dset_valid = SpleenDatasetBuilder(DATA_FOLDER, (0, 4)).dataset
 train_loader = DataLoader(dset_train, batch_size=args.batch_size)
 
@@ -141,7 +141,6 @@ def train(epoch, counter):
 
     for batch_idx, subjects_batch in enumerate(valid_loader):
         with torch.no_grad():
-
             image, mask = subjects_batch['t1'][torchio.DATA], subjects_batch['label'][torchio.DATA]
             image1, image2, image3, mask = get_samples(image, mask)
 
