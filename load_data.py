@@ -82,7 +82,7 @@ class SpleenDatasetBuilder:
 
         self.subjects = torchio.ImagesDataset(subject_lists, transform=transforms.Compose(mtransforms))
 
-        self.queue_dataset = torchio.Queue(
+        self.dataset = torchio.Queue(
             subjects_dataset=self.subjects,
             max_length=500,
             samples_per_volume=675,
@@ -94,6 +94,3 @@ class SpleenDatasetBuilder:
         )
 
         print("Dataset details\n  Images: {}".format(self.img_range[1] - self.img_range[0] + 1))
-
-        def get_dataset(self):
-            return self.queue_dataset
