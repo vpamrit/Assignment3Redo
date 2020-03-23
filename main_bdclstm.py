@@ -90,9 +90,9 @@ def train(epoch, counter):
         print(mask.shape)
 
         #split into three depth images
-        image1 = image[:, :, :, :, 0].squeeze_().cuda()
-        image2 = image[:, :, :, :, 1].squeeze_().cuda()
-        image3 = image[:, :, :, :, 2].squeeze_().cuda()
+        image1 = image[:, :, :, :, 0].squeeze_(5).cuda()
+        image2 = image[:, :, :, :, 1].squeeze_(5).cuda()
+        image3 = image[:, :, :, :, 2].squeeze_(5).cuda()
 
 
         image1, image2, image3, mask = Variable(image1), \
