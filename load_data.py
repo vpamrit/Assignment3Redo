@@ -16,6 +16,12 @@ from PIL import Image
 
 from os.path import join, isfile
 from os import listdir
+from torchio.transforms import (
+    ZNormalization,
+    RandomNoise,
+    RandomFlip,
+    RandomAffine,
+)
 
 #constants
 SAVE_IMAGES = False
@@ -69,7 +75,7 @@ class SpleenDatasetBuilder:
 
         # Define transforms for data normalization and augmentation
         mtransforms = (
-            transforms.ZNormalization(),
+            ZNormalization(),
             #transforms.RandomNoise(std_range=(0, 0.25)),
             #transforms.RandomFlip(axes=(0,)),
         )
