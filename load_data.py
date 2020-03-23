@@ -58,10 +58,12 @@ class SpleenDatasetBuilder:
             img_file = os.path.join(self.root_dir, TRAIN_DIR, IMG_PREFIX + self.files[img_num] + EXT)
             label_file = os.path.join(self.root_dir, LABEL_DIR, LABEL_PREFIX + self.files[img_num] + EXT)
 
-            subject_lists.append(torchio.Subject([
+            subject = torchio.Subject([
                 torchio.Image('t1', img_file, torchio.INTENSITY),
-                torchio.Image('label', label_file, torchio.LABEL)
-            ]))
+                torchio.Image('label', label_file, torchio.LABEL),
+            ])
+
+            subject_lists.append(subject)
 
             print(img_file)
 
