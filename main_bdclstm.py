@@ -57,7 +57,7 @@ if args.cuda:
     print("We are on the GPU!")
 
 DATA_FOLDER = args.data_folder
-CLASSES = [1,6,7,8,9,11]
+CLASSES = [0,1,6,7,8,9,11]
 
 # %% Loading in the Dataset
 slice_size = 240
@@ -67,9 +67,9 @@ train_loader = DataLoader(dset_train, batch_size=args.batch_size)
 
 
 # %% Loading in the models
-unet = UNetSmall(num_classes=(len(CLASSES) + 1))
+unet = UNetSmall(num_classes=(len(CLASSES)))
 #unet.load_state_dict(torch.load(UNET_MODEL_FILE))
-model = BDCLSTM(input_channels=32, hidden_channels=[32], num_classes=(len(CLASSES) + 1))
+model = BDCLSTM(input_channels=32, hidden_channels=[32], num_classes=(len(CLASSES)))
 
 if args.cuda:
     unet.cuda()
@@ -94,16 +94,11 @@ def train(epoch, counter):
         image2 = image[:, :, :, :, 1].cuda()
         image3 = image[:, :, :, :, 2].cuda()
 
-        mask = mask[:, :, :, :, 1].cuda()
+        mask = mask[:, :, :, :, 1]
 
         #add background masks
-        tmp_label = (mask == 0)[np.newaxis, :]
-
-        #add other masks
-        for nclass in CLASSES:
-            tmp_label = np.concatenate((tmp_label, (mask == nclass)[np.newaxis, :]), axis=0)
-
-        mask = tmp_label.astype('float32')
+        mask = torch.nn.functional.one_hot(mask, 14)
+        mask = mask[:, CLASSES, :, :].cuda()
 
 
         image1, image2, image3, mask = Variable(image1), \
