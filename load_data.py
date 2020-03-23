@@ -85,7 +85,7 @@ class SpleenDatasetBuilder:
             shuffle_patches=True
         )
 
-        print("Dataset details\n  Images: {}, 2D Slices: {}, Subslices {}, Padding-Margin: {}".format(self.img_range[1] - self.img_range[0] + 1, self.len, self.total_slices, self.padding))
+        print("Dataset details\n  Images: {}".format(self.img_range[1] - self.img_range[0] + 1))
 
         def get_dataset(self):
             return self.queue_dataset
