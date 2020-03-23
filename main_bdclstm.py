@@ -62,7 +62,7 @@ CLASSES = [1,6,7,8,9,11]
 slice_size = 240
 dset_train = SpleenDatasetBuilder(DATA_FOLDER, (1, 1)).dataset
 dset_valid = SpleenDatasetBuilder(DATA_FOLDER, (0, 4)).dataset
-train_loader = DataLoader(dset_train, batch_size=args.batch_size, num_workers=5)
+train_loader = DataLoader(dset_train, batch_size=args.batch_size)
 
 
 # %% Loading in the models
@@ -95,8 +95,15 @@ def train(epoch, counter):
 
         mask = mask[:, :, :, :, 1].cuda()
 
-        print(image1.shape)
-        print(mask.shape)
+        #add background masks
+        tmp_label = (img_label == 0)[np.newaxis, :]
+
+        #add other masks
+        for nclass in CLASSES:
+            tmp_label = np.concatenate((tmp_label, (mask == nclass)[np.newaxis, :]), axis=0)
+            img_label = tmp_label
+
+         mask = tmp_label.astype('float32')
 
 
         image1, image2, image3, mask = Variable(image1), \
