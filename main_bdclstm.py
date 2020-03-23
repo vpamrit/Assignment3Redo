@@ -79,32 +79,37 @@ if args.cuda:
 optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.mom)
 criterion = DiceLoss()
 
+
+def get_samples(image, mask):
+    #split into three depth images
+    image1 = image[:, :, :, :, 0].cuda()
+    image2 = image[:, :, :, :, 1].cuda()
+    image3 = image[:, :, :, :, 2].cuda()
+
+    mask = mask[:, :, :, :, 1]
+
+    #add background masks (2, 1, 240, 240)
+    #need it to be (2, 14, 240, 240)
+    mask = torch.nn.functional.one_hot(mask.to(torch.int64), 14).squeeze_().permute(0, 3, 1, 2)
+
+    print(mask.shape)
+    mask = mask[:, CLASSES, :, :].cuda()
+
+
+    image1, image2, image3, mask = Variable(image1), \
+        Variable(image2), \
+        Variable(image3), \
+        Variable(mask)
+
+    return image1, image2, image3, mask
+
 # Define Training Loop
 def train(epoch, counter):
     model.train()
     for batch_idx, subjects_batch in enumerate(train_loader):
 
         image, mask = subjects_batch['t1'][torchio.DATA], subjects_batch['label'][torchio.DATA]
-
-        #split into three depth images
-        image1 = image[:, :, :, :, 0].cuda()
-        image2 = image[:, :, :, :, 1].cuda()
-        image3 = image[:, :, :, :, 2].cuda()
-
-        mask = mask[:, :, :, :, 1]
-
-        #add background masks (2, 1, 240, 240)
-        #need it to be (2, 14, 240, 240)
-        mask = torch.nn.functional.one_hot(mask.to(torch.int64), 14).squeeze_().permute(0, 3, 1, 2)
-
-        print(mask.shape)
-        mask = mask[:, CLASSES, :, :].cuda()
-
-
-        image1, image2, image3, mask = Variable(image1), \
-            Variable(image2), \
-            Variable(image3), \
-            Variable(mask)
+        image1, image2, image3, mask = get_samples(image, mask)
 
         optimizer.zero_grad()
 
