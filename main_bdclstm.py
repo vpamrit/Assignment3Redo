@@ -97,7 +97,7 @@ def train(epoch, counter):
         #need it to be (2, 14, 240, 240)
         tmp_mask = torch.nn.functional.one_hot(mask.to(torch.int64), 14)
 
-        mask = torch.zeros((tmp_mask[0], tmp_mask[3], tmp_mask[1], tmp_mask[2]))
+        mask = torch.zeros((tmp_mask.shape[0], tmp_mask.shape[3], tmp_mask.shape[1], tmp_mask.shape[2]))
 
         #correct the shape
         for i in range(len(CLASSES)):
