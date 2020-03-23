@@ -87,7 +87,7 @@ class SpleenDatasetBuilder:
             subjects_dataset=self.subjects,
             max_length=200,
             samples_per_volume=10,
-            sampler_class=torchio.data.GridSampler,
+            sampler_class=torchio.sampler.ImageSampler,
             patch_size=(3, 240, 240),
             num_workers=0,
             shuffle_subjects=False,
