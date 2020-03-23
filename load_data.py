@@ -3,6 +3,7 @@ import random
 import re
 import torch
 import torchvision
+import torchio
 import nibabel as nib
 
 from skimage import io, transform
