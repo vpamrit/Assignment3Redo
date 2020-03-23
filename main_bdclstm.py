@@ -103,7 +103,7 @@ def train(epoch, counter):
             tmp_label = np.concatenate((tmp_label, (mask == nclass)[np.newaxis, :]), axis=0)
             img_label = tmp_label
 
-         mask = tmp_label.astype('float32')
+        mask = tmp_label.astype('float32')
 
 
         image1, image2, image3, mask = Variable(image1), \
