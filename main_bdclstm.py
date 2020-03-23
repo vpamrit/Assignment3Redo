@@ -95,13 +95,7 @@ def train(epoch, counter):
 
         #add background masks (2, 1, 240, 240)
         #need it to be (2, 14, 240, 240)
-        tmp_mask = torch.nn.functional.one_hot(mask.to(torch.int64), 14)
-
-        mask = torch.zeros((tmp_mask.shape[0], tmp_mask.shape[3], tmp_mask.shape[1], tmp_mask.shape[2]))
-
-        #correct the shape
-        for i in range(len(CLASSES)):
-            mask[:, i, :, :] = tmp_mask[:, :, :, i]
+        mask = torch.nn.functional.one_hot(mask.to(torch.int64), 14).permute(0, 3, 1, 2)
 
         print(mask.shape)
         mask = mask[:, CLASSES, :, :].cuda()
