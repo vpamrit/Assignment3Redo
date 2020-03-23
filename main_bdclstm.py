@@ -139,12 +139,11 @@ def train(epoch, counter):
 
     print('Computing validation loss...')
 
-    for batch_idx, (image1, image2, image3, mask) in enumerate(valid_loader):
+    for batch_idx, subjects_batch in enumerate(valid_loader):
         with torch.no_grad():
-            image1, image2, image3, mask = image1.cuda(), \
-                 image2.cuda(), \
-                 image3.cuda(), \
-                 mask.cuda()
+
+            image, mask = subjects_batch['t1'][torchio.DATA], subjects_batch['label'][torchio.DATA]
+            image1, image2, image3, mask = get_samples(image, mask)
 
             map1 = unet(image1, return_features=True)
             map2 = unet(image2, return_features=True)
