@@ -61,9 +61,9 @@ CLASSES = [0,1,6,7,8,9,11]
 
 # %% Loading in the Dataset
 slice_size = 240
-dset_train = SpleenDatasetBuilder(DATA_FOLDER, (0, 4)).dataset
+dset_train = SpleenDatasetBuilder(DATA_FOLDER, (0, 30)).dataset
 dset_valid = SpleenDatasetBuilder(DATA_FOLDER, (0, 4)).dataset
-train_loader = DataLoader(dset_train, batch_size=args.batch_size)
+train_loader = DataLoader(dset_train, batch_size=args.batch_size, num_workers=0)
 
 
 # %% Loading in the models
