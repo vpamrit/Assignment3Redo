@@ -85,7 +85,7 @@ class SpleenDatasetBuilder:
 
         self.dataset = torchio.Queue(
             subjects_dataset=self.subjects,
-            max_length=2,
+            max_length=1,
             samples_per_volume=675,
             sampler_class=torchio.sampler.ImageSampler,
             patch_size=(240, 240, 3),
