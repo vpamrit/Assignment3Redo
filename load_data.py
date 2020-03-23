@@ -72,6 +72,7 @@ class SpleenDatasetBuilder:
             subject_lists.append(subject)
 
             print(img_file)
+            print(label_file)
 
         # Define transforms for data normalization and augmentation
         mtransforms = (
