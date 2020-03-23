@@ -81,7 +81,10 @@ criterion = DiceLoss()
 # Define Training Loop
 def train(epoch, counter):
     model.train()
-    for subjects_batch in enumerate(train_loader):
+    for batch_idx, batch in enumerate(train_loader):
+
+
+
         image, mask = subjects_batch['t1'][torchio.DATA], subjects_batch['label'][torchio.DATA].cuda()
 
         print(image.shape)
