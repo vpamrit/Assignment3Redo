@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import torch
 import torch.optim as optim
 import torchvision
+import torchio
 from plain_dice import dice_coeff
 
 from losses import DICELossMultiClass, DICELoss
