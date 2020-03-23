@@ -9,7 +9,7 @@ from plain_dice import dice_coeff
 
 from losses import DICELossMultiClass, DICELoss
 from seg_losses import DiceLoss
-from load_data import SpleenDataset
+from load_data import SpleenDatasetBuilder
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 import torchvision.transforms as tr
