@@ -42,7 +42,7 @@ class SpleenDatasetBuilder:
         self.img_range = img_range
 
 
-        subjects = []
+        subject_lists = []
 
         #check if there is a labels
         if self.root_dir[-1] != '/':
@@ -58,7 +58,7 @@ class SpleenDatasetBuilder:
             img_file = os.path.join(self.root_dir, TRAIN_DIR, IMG_PREFIX + self.files[img_num] + EXT)
             label_file = os.path.join(self.root_dir, LABEL_DIR, LABEL_PREFIX + self.files[img_num] + EXT)
 
-            subjects.append(torchio.Subject([
+            subject_lists.append(torchio.Subject([
                 torchio.Image('t1', img_file, torchio.INTENSITY),
                 torchio.Image('label', label_file, torchio.LABEL)
             ]))
@@ -72,7 +72,8 @@ class SpleenDatasetBuilder:
             RandomFlip(axes=(0,)),
         )
 
-        self.subjects = torchio.ImagesDataset(subjects, transform=transforms.Compose(mtransforms))
+        self.subjects = torchio.ImagesDataset(subject_lists, transform=transforms.Compose(mtransforms))
+
         self.queue_dataset = torchio.Queue(
             subjects_dataset=self.subjects,
             max_length=500,
