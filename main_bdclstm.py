@@ -82,7 +82,10 @@ criterion = DiceLoss()
 def train(epoch, counter):
     model.train()
     for batch_idx, (image, mask) in enumerate(train_loader):
-        image, mask = image.cuda(), mask.cuda()
+        image, mask = image, mask.cuda()
+
+        print(image.shape)
+        print(mask.shape)
 
         #split into three depth images
         image1 = image[:, 0, :, :].cuda()
