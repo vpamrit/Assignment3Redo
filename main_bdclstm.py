@@ -96,7 +96,7 @@ def train(epoch, counter):
         mask = mask[:, :, :, :, 1].cuda()
 
         #add background masks
-        tmp_label = (img_label == 0)[np.newaxis, :]
+        tmp_label = (mask == 0)[np.newaxis, :]
 
         #add other masks
         for nclass in CLASSES:
