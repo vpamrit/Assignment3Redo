@@ -60,7 +60,8 @@ class SpleenDatasetBuilder:
 
             subject = torchio.Subject(
                 torchio.Image('t1', img_file, torchio.INTENSITY),
-                torchio.Image('label', label_file, torchio.LABEL))
+                torchio.Image('label', label_file, torchio.LABEL)
+            )
 
             subject_lists.append(subject)
 
@@ -68,9 +69,9 @@ class SpleenDatasetBuilder:
 
         # Define transforms for data normalization and augmentation
         mtransforms = (
-            ZNormalization(),
-            RandomNoise(std_range=(0, 0.25)),
-            RandomFlip(axes=(0,)),
+            transforms.ZNormalization(),
+            #transforms.RandomNoise(std_range=(0, 0.25)),
+            #transforms.RandomFlip(axes=(0,)),
         )
 
         self.subjects = torchio.ImagesDataset(subject_lists, transform=transforms.Compose(mtransforms))
