@@ -89,7 +89,7 @@ class SpleenDatasetBuilder:
             samples_per_volume=20,
             sampler_class=torchio.sampler.ImageSampler,
             patch_size=(240, 240, 3),
-            num_workers=3,
+            num_workers=4,
             shuffle_subjects=False,
             shuffle_patches=True
         )
